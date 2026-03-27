@@ -11,8 +11,8 @@ model Usuario {
   id         Int         @id @default(autoincrement())
   nome      String
   email     String      @unique
-  senhaHash String
-  tipo      TipoUsuario @default(comum)
+  senha     String
+  tipo      ETipoUsuario @default(comum)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 
@@ -65,7 +65,7 @@ model Assistido {
   @@index([filmeId])
 }
 
-enum TipoUsuario {
+enum ETipoUsuario {
   admin
   comum
 }
