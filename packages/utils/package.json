@@ -1,0 +1,13 @@
+{
+  "name": "@mk/utils",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint ./src --ext .ts",
+    "format": "prettier ./src --write",
+    "test": "echo \"No tests yet\""
+  }
+}

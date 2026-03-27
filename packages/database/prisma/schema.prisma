@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id         Int         @id @default(autoincrement())
+  nome      String
+  email     String      @unique
+  senhaHash String
+  tipo      TipoUsuario @default(comum)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  favoritos Favorito[]
+  assistidos Assistido[]
+}
+
+model Filme {
+  id        Int       @id @default(autoincrement())
+  imdbId    String     @unique
+  titulo    String
+  ano       String
+  posterUrl String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  favoritos Favorito[]
+  assistidos Assistido[]
+
+  @@index([titulo])
+}
+
+model Favorito {
+  id        Int      @id @default(autoincrement())
+  usuarioId Int
+  filmeId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  filme   Filme   @relation(fields: [filmeId], references: [id], onDelete: Cascade)
+
+  @@unique([usuarioId, filmeId])
+  @@index([usuarioId])
+  @@index([filmeId])
+}
+
+model Assistido {
+  id        Int      @id @default(autoincrement())
+  usuarioId Int
+  filmeId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  filme   Filme   @relation(fields: [filmeId], references: [id], onDelete: Cascade)
+
+  @@unique([usuarioId, filmeId])
+  @@index([usuarioId])
+  @@index([filmeId])
+}
+
+enum TipoUsuario {
+  admin
+  comum
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@mk/database",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "prisma generate && tsc -p tsconfig.json",
+    "lint": "eslint ./src --ext .ts",
+    "format": "prettier ./src --write",
+    "migrate-dev": "prisma migrate dev",
+    "deploy-db": "prisma migrate deploy",
+    "seed": "prisma db seed",
+    "test": "echo \"No tests yet\""
+  },
+  "dependencies": {
+    "@prisma/client": "^6.0.0"
+  },
+  "devDependencies": {
+    "prisma": "^6.0.0"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  }
+}

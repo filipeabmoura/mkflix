@@ -1,0 +1,29 @@
+{
+  "name": "teste-omdb-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+		"node": "24.12.0"
+	},
+  "scripts": {
+    "dev": "turbo dev --parallel",
+    "build": "turbo build --parallel",
+    "lint": "turbo lint --parallel",
+    "format": "turbo format --parallel",
+    "test": "turbo test --parallel"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/node": "^22.0.0",
+    "turbo": "^2.0.0",
+    "typescript": "5.5.4",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "typescript": "5.5.4"
+    }
+  }
+}

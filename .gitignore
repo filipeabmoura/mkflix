@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.turbo/
+.angular/
+coverage/
+.env
+.env.*
+!.env.example
+
+
+#Arquivos de desenvolvimento local
+.cursor/
