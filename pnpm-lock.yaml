@@ -32,6 +32,9 @@ importers:
 
   apps/api:
     dependencies:
+      '@mk/database':
+        specifier: workspace:*
+        version: link:../../packages/database-mkflix
       '@nestjs/common':
         specifier: ^10.0.0
         version: 10.4.22(reflect-metadata@0.2.2)(rxjs@7.8.2)
@@ -113,7 +116,7 @@ importers:
         specifier: 5.5.4
         version: 5.5.4
 
-  packages/database:
+  packages/database-mkflix:
     dependencies:
       '@prisma/client':
         specifier: ^6.0.0

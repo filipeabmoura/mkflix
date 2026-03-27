@@ -6,6 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "prisma generate && tsc -p tsconfig.json",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
     "lint": "eslint ./src --ext .ts",
     "format": "prettier ./src --write",
     "migrate-dev": "prisma migrate dev",

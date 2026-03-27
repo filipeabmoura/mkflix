@@ -5,7 +5,9 @@
     "rootDir": "./src",
     "declaration": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {}
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]

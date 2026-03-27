@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:16.9-bullseye
+    container_name: mkflix-postgres
+    restart: always
+    env_file:
+      - ./.env
+    ports:
+      - "5433:5432"
+    volumes:
+      - mkflix_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  mkflix_postgres_data:
