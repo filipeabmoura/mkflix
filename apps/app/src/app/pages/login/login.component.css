@@ -1,0 +1,50 @@
+.auth-card {
+  max-width: 400px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.campo__label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.campo__input {
+  padding: 0.55rem 0.65rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.campo__erro {
+  font-size: 0.8rem;
+  color: #b71c1c;
+}
+
+.auth-card__rodape {
+  margin-top: 1.25rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.auth-card__rodape a {
+  color: #e50914;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-card__rodape a:hover {
+  text-decoration: underline;
+}
