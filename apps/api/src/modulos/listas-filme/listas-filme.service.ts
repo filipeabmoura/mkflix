@@ -4,11 +4,13 @@ import type {
   IFavorito,
   IFilme,
   IFilmeEstadoItem,
-  ISincronizarFilmeBody
+  ISincronizarFilmeBody,
+  IUsuarioFilmeMarcacao
 } from "@mk/model";
 import { EApiCodes } from "@mk/model";
 import { MkException } from "../../core/exceptions/mk.exception";
 import { FilmeService } from "../filme/filme.service";
+import { filmeParaResposta } from "../filme/filme.utils";
 import { AssistidoDAO } from "./assistido.dao";
 import { FavoritoDAO } from "./favorito.dao";
 import {
@@ -100,6 +102,26 @@ export class ListasFilmeService {
       );
     }
     await this.favoritoDAO.deleteByUsuarioAndFilme(usuarioId, filmeId);
+  }
+
+  async listarFavoritosMarcacao(
+    usuarioId: number
+  ): Promise<IUsuarioFilmeMarcacao[]> {
+    const linhas = await this.favoritoDAO.listarPorUsuarioComFilme(usuarioId);
+    return linhas.map((row) => ({
+      filme: filmeParaResposta(row.filme),
+      marcadoEm: row.createdAt.toISOString()
+    }));
+  }
+
+  async listarAssistidosMarcacao(
+    usuarioId: number
+  ): Promise<IUsuarioFilmeMarcacao[]> {
+    const linhas = await this.assistidoDAO.listarPorUsuarioComFilme(usuarioId);
+    return linhas.map((row) => ({
+      filme: filmeParaResposta(row.filme),
+      marcadoEm: row.createdAt.toISOString()
+    }));
   }
 
   async estadoFilmesPorImdbIds(
