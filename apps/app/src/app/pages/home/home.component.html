@@ -30,7 +30,15 @@
     [rowAlternationEnabled]="true"
     [hoverStateEnabled]="true"
     [paging]="{ pageSize: 20 }"
-    [pager]="{ showPageSizeSelector: false, showInfo: true }"
+    [pager]="{
+      visible: true,
+      displayMode: 'full',
+      showInfo: true,
+      infoText: 'Página {0} de {1} ({2} resultados)',
+      showNavigationButtons: true,
+      showPageSizeSelector: true,
+      allowedPageSizes: [10, 20, 50]
+    }"
     noDataText="Nenhum resultado. Use o campo acima e clique em Buscar."
   >
     <dxi-column
