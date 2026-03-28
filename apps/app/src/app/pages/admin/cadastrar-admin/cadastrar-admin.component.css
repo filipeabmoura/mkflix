@@ -1,0 +1,52 @@
+.form-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.75rem;
+  max-width: 480px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1.1rem;
+}
+
+.campo label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.campo input {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.campo input:focus {
+  outline: none;
+  border-color: #e50914;
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.1);
+}
+
+.campo__input--erro {
+  border-color: #e50914 !important;
+}
+
+.campo__erro {
+  font-size: 0.8rem;
+  color: #c00;
+}
+
+.alerta-sucesso {
+  background: #e6f9f0;
+  border: 1px solid #2ecc71;
+  color: #1a7a46;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}

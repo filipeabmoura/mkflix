@@ -1,0 +1,63 @@
+<app-mk-page-title
+  titulo="Cadastrar Admin"
+  subtitulo="Crie uma nova conta de administrador"
+></app-mk-page-title>
+
+<app-mk-alert tipo="erro" [mensagem]="erro"></app-mk-alert>
+
+<div *ngIf="sucesso" class="alerta-sucesso">
+  {{ sucesso }}
+</div>
+
+<div class="form-card">
+  <form [formGroup]="form" (ngSubmit)="enviar()" novalidate>
+    <div class="campo">
+      <label for="nome">Nome</label>
+      <input
+        id="nome"
+        type="text"
+        formControlName="nome"
+        placeholder="Nome completo"
+        [class.campo__input--erro]="temErro('nome')"
+      />
+      <span *ngIf="temErro('nome')" class="campo__erro">
+        Nome obrigatório (mínimo 2 caracteres).
+      </span>
+    </div>
+
+    <div class="campo">
+      <label for="email">E-mail</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="admin@exemplo.com"
+        [class.campo__input--erro]="temErro('email')"
+      />
+      <span *ngIf="temErro('email')" class="campo__erro">
+        E-mail inválido ou obrigatório.
+      </span>
+    </div>
+
+    <div class="campo">
+      <label for="senha">Senha</label>
+      <input
+        id="senha"
+        type="password"
+        formControlName="senha"
+        placeholder="Mínimo 6 caracteres"
+        [class.campo__input--erro]="temErro('senha')"
+      />
+      <span *ngIf="temErro('senha')" class="campo__erro">
+        Senha obrigatória (mínimo 6 caracteres).
+      </span>
+    </div>
+
+    <app-mk-button
+      label="Cadastrar Admin"
+      tipoHtml="submit"
+      [loading]="enviando"
+      [larguraTotal]="true"
+    ></app-mk-button>
+  </form>
+</div>

@@ -1,0 +1,62 @@
+.grid-wrap {
+  background: #fff;
+  border-radius: 8px;
+  padding: 0.25rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  margin-bottom: 1.5rem;
+}
+
+.thumb {
+  display: block;
+  width: 48px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #eee;
+}
+
+.thumb--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 72px;
+  background: #eee;
+  color: #888;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.badge--admin {
+  background: rgba(229, 9, 20, 0.12);
+  color: #c00;
+}
+
+.badge--comum {
+  background: rgba(0, 0, 0, 0.07);
+  color: #555;
+}
+
+.btn-ver {
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.btn-ver:hover {
+  background: #f5f5f5;
+}

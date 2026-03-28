@@ -1,0 +1,69 @@
+<app-mk-page-title
+  titulo="Usuários"
+  subtitulo="Todos os usuários cadastrados na plataforma"
+></app-mk-page-title>
+
+<app-mk-alert tipo="erro" [mensagem]="erro"></app-mk-alert>
+
+<div class="grid-wrap">
+  <dx-data-grid
+    [dataSource]="dataSource"
+    [remoteOperations]="{ paging: true }"
+    [showBorders]="true"
+    [columnAutoWidth]="true"
+    [rowAlternationEnabled]="true"
+    [hoverStateEnabled]="true"
+    [paging]="{ pageSize: 20 }"
+    [pager]="{
+      visible: true,
+      displayMode: 'full',
+      showInfo: true,
+      infoText: 'Página {0} de {1} ({2} usuários)',
+      showNavigationButtons: true,
+      showPageSizeSelector: true,
+      allowedPageSizes: [10, 20, 50]
+    }"
+    noDataText="Nenhum usuário cadastrado."
+  >
+    <dxi-column dataField="nome" caption="Nome"></dxi-column>
+    <dxi-column dataField="email" caption="E-mail"></dxi-column>
+    <dxi-column
+      dataField="tipo"
+      caption="Tipo"
+      cellTemplate="tipoCell"
+      [width]="110"
+      alignment="center"
+    ></dxi-column>
+    <dxi-column
+      dataField="createdAt"
+      caption="Cadastrado em"
+      dataType="datetime"
+      format="dd/MM/yyyy HH:mm"
+      [width]="165"
+    ></dxi-column>
+    <dxi-column
+      caption="Ações"
+      cellTemplate="acoesCell"
+      [width]="100"
+      alignment="center"
+    ></dxi-column>
+
+    <div *dxTemplate="let cell of 'tipoCell'">
+      <span
+        class="badge"
+        [class.badge--admin]="cell.data.tipo === 'admin'"
+        [class.badge--comum]="cell.data.tipo === 'comum'"
+      >{{ cell.data.tipo }}</span>
+    </div>
+
+    <div *dxTemplate="let cell of 'acoesCell'">
+      <button
+        type="button"
+        class="btn-ver"
+        (click)="verDetalhe(cell.data.id)"
+      >
+        Ver
+      </button>
+    </div>
+  </dx-data-grid>
+</div>

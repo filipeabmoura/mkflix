@@ -1,0 +1,63 @@
+<app-mk-page-title
+  titulo="Ranking — Favoritos"
+  subtitulo="Filmes mais favoritados por todos os usuários"
+></app-mk-page-title>
+
+<app-mk-alert tipo="erro" [mensagem]="erro"></app-mk-alert>
+
+<div class="grid-wrap">
+  <dx-data-grid
+    [dataSource]="dataSource"
+    [remoteOperations]="{ paging: true }"
+    [showBorders]="true"
+    [columnAutoWidth]="true"
+    [rowAlternationEnabled]="true"
+    [hoverStateEnabled]="true"
+    [paging]="{ pageSize: 20 }"
+    [pager]="{
+      visible: true,
+      displayMode: 'full',
+      showInfo: true,
+      infoText: 'Página {0} de {1} ({2} filmes)',
+      showNavigationButtons: true,
+      showPageSizeSelector: true,
+      allowedPageSizes: [10, 20, 50]
+    }"
+    noDataText="Nenhum dado de favoritos ainda."
+  >
+    <dxi-column
+      caption="Pos."
+      cellTemplate="posicaoCell"
+      [width]="60"
+      alignment="center"
+    ></dxi-column>
+    <dxi-column
+      caption="Poster"
+      cellTemplate="posterCell"
+      [width]="80"
+    ></dxi-column>
+    <dxi-column dataField="titulo" caption="Título"></dxi-column>
+    <dxi-column dataField="ano" caption="Ano" [width]="88"></dxi-column>
+    <dxi-column
+      dataField="quantidade"
+      caption="Nº Favoritos"
+      [width]="140"
+      alignment="center"
+      [sortOrder]="'desc'"
+    ></dxi-column>
+
+    <div *dxTemplate="let cell of 'posicaoCell'">
+      <strong>{{ cell.rowIndex + 1 }}</strong>
+    </div>
+
+    <div *dxTemplate="let cell of 'posterCell'">
+      <img
+        *ngIf="cell.data.posterUrl"
+        [src]="cell.data.posterUrl"
+        class="thumb"
+        alt=""
+      />
+      <span *ngIf="!cell.data.posterUrl" class="thumb thumb--empty">—</span>
+    </div>
+  </dx-data-grid>
+</div>

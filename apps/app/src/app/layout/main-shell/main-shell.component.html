@@ -24,6 +24,7 @@
       [attr.aria-hidden]="!menuAberto"
     >
       <div class="shell__brand">MkFlix</div>
+
       <nav class="shell__nav" aria-label="Principal">
         <a
           routerLink="/home"
@@ -45,6 +46,38 @@
           >Favoritos</a
         >
       </nav>
+
+      <ng-container *ngIf="isAdmin">
+        <div class="shell__nav-sep"></div>
+        <span class="shell__nav-label">Área Admin</span>
+        <nav class="shell__nav" aria-label="Administração">
+          <a
+            routerLink="/admin/rankings/assistidos"
+            routerLinkActive="shell__link--ativo"
+            (click)="fecharMenu()"
+            >Ranking Assistidos</a
+          >
+          <a
+            routerLink="/admin/rankings/favoritos"
+            routerLinkActive="shell__link--ativo"
+            (click)="fecharMenu()"
+            >Ranking Favoritos</a
+          >
+          <a
+            routerLink="/admin/usuarios"
+            routerLinkActive="shell__link--ativo"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="fecharMenu()"
+            >Usuários</a
+          >
+          <a
+            routerLink="/admin/cadastrar-admin"
+            routerLinkActive="shell__link--ativo"
+            (click)="fecharMenu()"
+            >Cadastrar Admin</a
+          >
+        </nav>
+      </ng-container>
     </aside>
 
     <div
