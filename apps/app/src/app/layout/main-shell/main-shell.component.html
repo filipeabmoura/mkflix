@@ -11,7 +11,6 @@
       <span></span><span></span><span></span>
     </button>
     <img src="/images/mkflix-logo.png" alt="MkFlix" class="shell__logo" />
-    <span class="shell__header-title">{{ tituloPagina }}</span>
     <div class="shell__user">
       <span class="shell__user-name">{{ nomeUsuario }}</span>
       <button type="button" class="shell__logout" (click)="sair()">Sair</button>
@@ -24,8 +23,6 @@
       class="shell__sidebar"
       [attr.aria-hidden]="!menuAberto"
     >
-      <div class="shell__brand">MkFlix</div>
-
       <nav class="shell__nav" aria-label="Principal">
         <a
           routerLink="/home"
