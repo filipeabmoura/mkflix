@@ -116,3 +116,33 @@ export interface IJwtPayload {
   email: string;
   tipo: TTipoUsuario;
 }
+
+/** Query comum para listagens admin (page 1-based). */
+export interface IPaginacaoAdminQuery {
+  page: number;
+  pageSize: number;
+}
+
+export interface IRankingFilmeItem {
+  filme: IFilme;
+  quantidade: number;
+}
+
+export interface IPaginado<T> {
+  page: number;
+  pageSize: number;
+  totalItens: number;
+  totalPaginas: number;
+  itens: T[];
+}
+
+export interface IUsuarioFilmeMarcacao {
+  filme: IFilme;
+  marcadoEm: string;
+}
+
+export interface IUsuarioDetalheAdmin {
+  usuario: IUsuario;
+  favoritos: IUsuarioFilmeMarcacao[];
+  assistidos: IUsuarioFilmeMarcacao[];
+}
