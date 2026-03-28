@@ -1,8 +1,17 @@
-import { Body, Controller, Delete, Param, ParseIntPipe, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post
+} from "@nestjs/common";
 import type {
   IFavorito,
   ISincronizarFilmeBody,
-  IUsuarioAutenticado
+  IUsuarioAutenticado,
+  IUsuarioFilmeMarcacao
 } from "@mk/model";
 import { User } from "../../core/decorators/user.decorator";
 import { MkValidationPipe } from "../../core/validation/validation.pipe";
@@ -12,6 +21,13 @@ import { ListasFilmeService } from "./listas-filme.service";
 @Controller("favoritos")
 export class FavoritoController {
   constructor(private readonly listasFilmeService: ListasFilmeService) {}
+
+  @Get()
+  async listar(
+    @User() usuario: IUsuarioAutenticado
+  ): Promise<IUsuarioFilmeMarcacao[]> {
+    return this.listasFilmeService.listarFavoritosMarcacao(usuario.id);
+  }
 
   @Post()
   async criar(

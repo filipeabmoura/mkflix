@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import type { Assistido } from "@mk/database";
+import type { Assistido, Filme } from "@mk/database";
 import { ClientService } from "../../core/client/client.service";
 
 @Injectable()
@@ -36,6 +36,16 @@ export class AssistidoDAO {
     }
     return this.client.assistido.findMany({
       where: { usuarioId, filmeId: { in: filmeIds } }
+    });
+  }
+
+  async listarPorUsuarioComFilme(usuarioId: number): Promise<
+    Array<Assistido & { filme: Filme }>
+  > {
+    return this.client.assistido.findMany({
+      where: { usuarioId },
+      include: { filme: true },
+      orderBy: { createdAt: "desc" }
     });
   }
 }

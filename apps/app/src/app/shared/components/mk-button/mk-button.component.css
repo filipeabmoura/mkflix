@@ -1,0 +1,68 @@
+.mk-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.mk-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mk-button--full {
+  width: 100%;
+}
+
+.mk-button--primaria {
+  background: #e50914;
+  color: #fff;
+}
+
+.mk-button--primaria:hover:not(:disabled) {
+  background: #c40812;
+}
+
+.mk-button--secundaria {
+  background: #fff;
+  color: #1a1a1a;
+  border-color: #d0d0d0;
+}
+
+.mk-button--secundaria:hover:not(:disabled) {
+  background: #f5f5f5;
+}
+
+.mk-button--fantasma {
+  background: transparent;
+  color: #e50914;
+  border-color: transparent;
+}
+
+.mk-button__spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: mk-spin 0.7s linear infinite;
+}
+
+.mk-button--secundaria .mk-button__spinner,
+.mk-button--fantasma .mk-button__spinner {
+  border-color: rgba(0, 0, 0, 0.15);
+  border-top-color: #e50914;
+}
+
+@keyframes mk-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import type { Favorito } from "@mk/database";
+import type { Favorito, Filme } from "@mk/database";
 import { ClientService } from "../../core/client/client.service";
 
 @Injectable()
@@ -36,6 +36,16 @@ export class FavoritoDAO {
     }
     return this.client.favorito.findMany({
       where: { usuarioId, filmeId: { in: filmeIds } }
+    });
+  }
+
+  async listarPorUsuarioComFilme(usuarioId: number): Promise<
+    Array<Favorito & { filme: Filme }>
+  > {
+    return this.client.favorito.findMany({
+      where: { usuarioId },
+      include: { filme: true },
+      orderBy: { createdAt: "desc" }
     });
   }
 }

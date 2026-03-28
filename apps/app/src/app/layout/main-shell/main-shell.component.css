@@ -1,0 +1,169 @@
+.shell {
+  display: flex;
+  min-height: 100vh;
+  background: #f4f4f4;
+}
+
+.shell__sidebar {
+  position: fixed;
+  z-index: 20;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 240px;
+  background: #141414;
+  color: #fff;
+  transform: translateX(-100%);
+  transition: transform 0.2s ease;
+  padding: 1.25rem 1rem;
+  box-sizing: border-box;
+}
+
+.shell--menu-aberto .shell__sidebar {
+  transform: translateX(0);
+}
+
+.shell__brand {
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: 0.04em;
+  color: #e50914;
+  margin-bottom: 1.5rem;
+}
+
+.shell__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.shell__nav a {
+  color: #e5e5e5;
+  text-decoration: none;
+  padding: 0.55rem 0.65rem;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.shell__nav a:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.shell__link--ativo {
+  background: rgba(229, 9, 20, 0.2);
+  color: #fff;
+}
+
+.shell__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.shell__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+}
+
+.shell__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.shell__hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0.35rem;
+  border-radius: 6px;
+}
+
+.shell__hamburger:hover {
+  background: #f0f0f0;
+}
+
+.shell__hamburger span {
+  display: block;
+  height: 2px;
+  background: #1a1a1a;
+  border-radius: 1px;
+}
+
+.shell__header-title {
+  flex: 1;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.shell__user {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.shell__user-name {
+  font-size: 0.9rem;
+  color: #444;
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shell__logout {
+  border: 1px solid #d0d0d0;
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.shell__logout:hover {
+  background: #fafafa;
+}
+
+.shell__content {
+  flex: 1;
+  padding: 1.25rem 1rem 2rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media (min-width: 900px) {
+  .shell__sidebar {
+    position: relative;
+    transform: translateX(0);
+  }
+
+  .shell__backdrop {
+    display: none;
+  }
+
+  .shell--menu-aberto .shell__sidebar {
+    transform: translateX(0);
+  }
+
+  .shell__hamburger {
+    display: none;
+  }
+}

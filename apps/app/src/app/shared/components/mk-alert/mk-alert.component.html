@@ -1,0 +1,8 @@
+<div
+  *ngIf="mensagem !== null && mensagem.length > 0"
+  class="mk-alert"
+  [ngClass]="'mk-alert--' + tipo"
+  role="alert"
+>
+  {{ mensagem }}
+</div>
