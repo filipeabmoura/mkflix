@@ -145,12 +145,13 @@ export class ListasFilmeService {
     return ordenados.map((imdbId) => {
       const filme: IFilme | undefined = mapaFilmes.get(imdbId);
       if (filme === undefined) {
-        return { imdbId, assistido: false, favorito: false };
+        return { imdbId, assistido: false, favorito: false, filmeId: null };
       }
       return {
         imdbId,
         assistido: assistidoPorFilmeId.has(filme.id),
-        favorito: favoritoPorFilmeId.has(filme.id)
+        favorito: favoritoPorFilmeId.has(filme.id),
+        filmeId: filme.id
       };
     });
   }
