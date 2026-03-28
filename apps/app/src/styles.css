@@ -56,6 +56,20 @@ body {
   border: 0;
 }
 
+/* ── DevExtreme — popup compacto ────────────────────────────────── */
+.dx-overlay-content .popup-texto {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin: 0 0 1.25rem;
+  color: var(--mk-navy, #1b1d36);
+}
+
+.dx-overlay-content .popup-acoes {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
 /* ── DevExtreme — accent → roxo Microkids ───────────────────────── */
 .dx-state-focused.dx-texteditor,
 .dx-texteditor.dx-state-active {

@@ -79,11 +79,12 @@
 </div>
 
 <dx-popup
-  [width]="420"
-  [showCloseButton]="true"
+  [width]="400"
+  [height]="210"
+  [showTitle]="false"
+  [showCloseButton]="false"
   [shading]="true"
   [(visible)]="popupVisivel"
-  [title]="popupTitulo"
   (onHidden)="aoPopupOculto()"
 >
   <div *dxTemplate="let _ of 'content'">
