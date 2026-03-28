@@ -65,6 +65,8 @@ export interface IFilmeEstadoItem {
   imdbId: string;
   assistido: boolean;
   favorito: boolean;
+  /** Presente quando o filme já existe no banco (necessário para DELETE). */
+  filmeId?: number | null;
 }
 
 export interface IFilmesEstadoQuery {
