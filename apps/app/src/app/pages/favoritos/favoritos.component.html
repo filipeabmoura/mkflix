@@ -1,0 +1,27 @@
+<app-mk-page-title
+  titulo="Favoritos"
+  subtitulo="Filmes que você favoritou (após assistir)"
+></app-mk-page-title>
+
+<app-mk-alert tipo="erro" [mensagem]="erro"></app-mk-alert>
+
+<div class="grid-wrap">
+  <dx-data-grid
+    [dataSource]="linhas"
+    [showBorders]="true"
+    [columnAutoWidth]="true"
+    [rowAlternationEnabled]="true"
+    [hoverStateEnabled]="true"
+    noDataText="Nenhum favorito ainda."
+  >
+    <dxi-column dataField="titulo" caption="Título"></dxi-column>
+    <dxi-column dataField="ano" caption="Ano" [width]="88"></dxi-column>
+    <dxi-column dataField="imdbId" caption="IMDb ID" [width]="118"></dxi-column>
+    <dxi-column
+      dataField="marcadoEm"
+      caption="Favoritado em"
+      dataType="datetime"
+      format="dd/MM/yyyy HH:mm"
+    ></dxi-column>
+  </dx-data-grid>
+</div>
