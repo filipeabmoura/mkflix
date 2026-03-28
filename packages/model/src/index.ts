@@ -29,6 +29,31 @@ export interface IFilme {
   updatedAt: string;
 }
 
+/** Item retornado na busca por título (OMDb, uma página por requisição). */
+export interface IOmdbResultadoBusca {
+  imdbId: string;
+  titulo: string;
+  ano: string;
+  posterUrl?: string | null;
+  tipo?: string;
+}
+
+export interface IBuscaFilmesResposta {
+  /** Página OMDb solicitada (1-based). */
+  pagina: number;
+  totalResultados: number;
+  itens: IOmdbResultadoBusca[];
+}
+
+export interface IBuscaFilmesQuery {
+  q: string;
+  page: number;
+}
+
+export interface ISincronizarFilmeBody {
+  imdbId: string;
+}
+
 export interface IFavorito {
   id: number;
   usuarioId: number;
