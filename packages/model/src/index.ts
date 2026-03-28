@@ -8,7 +8,7 @@ export enum EApiCodes {
 export type TTipoUsuario = "admin" | "comum";
 
 export interface IUsuario {
-  id: string;
+  id: number;
   nome: string;
   email: string;
   tipo: TTipoUsuario;
@@ -17,7 +17,7 @@ export interface IUsuario {
 }
 
 export interface IFilme {
-  id: string;
+  id: number;
   imdbId: string;
   titulo: string;
   ano: string;
@@ -27,17 +27,17 @@ export interface IFilme {
 }
 
 export interface IFavorito {
-  id: string;
-  usuarioId: string;
-  filmeId: string;
+  id: number;
+  usuarioId: number;
+  filmeId: number;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface IAssistido {
-  id: string;
-  usuarioId: string;
-  filmeId: string;
+  id: number;
+  usuarioId: number;
+  filmeId: number;
   createdAt: string;
   updatedAt: string;
 }
