@@ -38,13 +38,13 @@
 }
 
 .badge--admin {
-  background: rgba(229, 9, 20, 0.12);
-  color: #c00;
+  background: rgba(173, 150, 220, 0.18);
+  color: var(--mk-navy, #1b1d36);
 }
 
 .badge--comum {
   background: rgba(0, 0, 0, 0.07);
-  color: #555;
+  color: var(--mk-gray-dark, #545457);
 }
 
 .btn-ver {

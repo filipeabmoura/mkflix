@@ -49,9 +49,9 @@
 }
 
 .acao--on {
-  border-color: #e50914;
-  color: #e50914;
-  background: #fff5f5;
+  border-color: var(--mk-purple, #ad96dc);
+  color: var(--mk-navy, #1b1d36);
+  background: rgba(173, 150, 220, 0.15);
 }
 
 .popup-texto {

@@ -1,62 +1,66 @@
-<section class="auth-card">
-  <app-mk-page-title
-    titulo="Criar conta"
-    subtitulo="Cadastro de usuário comum"
-  ></app-mk-page-title>
+<div class="auth-wrap">
+  <img src="/images/mkflix-logo.png" alt="MkFlix" class="auth-logo" />
 
-  <app-mk-alert tipo="erro" [mensagem]="mensagemErro"></app-mk-alert>
+  <section class="auth-card">
+    <app-mk-page-title
+      titulo="Criar conta"
+      subtitulo="Cadastro de usuário comum"
+    ></app-mk-page-title>
 
-  <form [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
-    <label class="campo">
-      <span class="campo__label">Nome</span>
-      <input type="text" formControlName="nome" class="campo__input" />
-      <span
-        class="campo__erro"
-        *ngIf="formulario.controls.nome.touched && formulario.controls.nome.invalid"
-        >Informe seu nome.</span
-      >
-    </label>
+    <app-mk-alert tipo="erro" [mensagem]="mensagemErro"></app-mk-alert>
 
-    <label class="campo">
-      <span class="campo__label">E-mail</span>
-      <input
-        type="email"
-        formControlName="email"
-        autocomplete="email"
-        class="campo__input"
-      />
-      <span
-        class="campo__erro"
-        *ngIf="formulario.controls.email.touched && formulario.controls.email.invalid"
-        >Informe um e-mail válido.</span
-      >
-    </label>
+    <form [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
+      <label class="campo">
+        <span class="campo__label">Nome</span>
+        <input type="text" formControlName="nome" class="campo__input" />
+        <span
+          class="campo__erro"
+          *ngIf="formulario.controls.nome.touched && formulario.controls.nome.invalid"
+          >Informe seu nome.</span
+        >
+      </label>
 
-    <label class="campo">
-      <span class="campo__label">Senha</span>
-      <input
-        type="password"
-        formControlName="senha"
-        autocomplete="new-password"
-        class="campo__input"
-      />
-      <span
-        class="campo__erro"
-        *ngIf="formulario.controls.senha.touched && formulario.controls.senha.invalid"
-        >Mínimo de 6 caracteres.</span
-      >
-    </label>
+      <label class="campo">
+        <span class="campo__label">E-mail</span>
+        <input
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          class="campo__input"
+        />
+        <span
+          class="campo__erro"
+          *ngIf="formulario.controls.email.touched && formulario.controls.email.invalid"
+          >Informe um e-mail válido.</span
+        >
+      </label>
 
-    <app-mk-button
-      tipoHtml="submit"
-      label="Cadastrar"
-      [loading]="carregando"
-      [larguraTotal]="true"
-    ></app-mk-button>
-  </form>
+      <label class="campo">
+        <span class="campo__label">Senha</span>
+        <input
+          type="password"
+          formControlName="senha"
+          autocomplete="new-password"
+          class="campo__input"
+        />
+        <span
+          class="campo__erro"
+          *ngIf="formulario.controls.senha.touched && formulario.controls.senha.invalid"
+          >Mínimo de 6 caracteres.</span
+        >
+      </label>
 
-  <p class="auth-card__rodape">
-    Já tem conta?
-    <a routerLink="/login">Entrar</a>
-  </p>
-</section>
+      <app-mk-button
+        tipoHtml="submit"
+        label="Cadastrar"
+        [loading]="carregando"
+        [larguraTotal]="true"
+      ></app-mk-button>
+    </form>
+
+    <p class="auth-card__rodape">
+      Já tem conta?
+      <a routerLink="/login">Entrar</a>
+    </p>
+  </section>
+</div>
