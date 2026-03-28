@@ -5,7 +5,11 @@ export enum EApiCodes {
   Nao_Autorizado = "Nao_Autorizado",
   Email_Ja_Cadastrado = "Email_Ja_Cadastrado",
   Credenciais_Invalidas = "Credenciais_Invalidas",
-  Proibido = "Proibido"
+  Proibido = "Proibido",
+  Favorito_Sem_Assistido = "Favorito_Sem_Assistido",
+  Favorito_Ja_Existe = "Favorito_Ja_Existe",
+  Assistido_Ja_Existe = "Assistido_Ja_Existe",
+  Nao_Encontrado = "Nao_Encontrado"
 }
 
 export type TTipoUsuario = "admin" | "comum";
@@ -52,6 +56,19 @@ export interface IBuscaFilmesQuery {
 
 export interface ISincronizarFilmeBody {
   imdbId: string;
+}
+
+/** Corpo para marcar favorito ou assistido (mesmo formato da sincronização). */
+export type TCorpoImdbId = ISincronizarFilmeBody;
+
+export interface IFilmeEstadoItem {
+  imdbId: string;
+  assistido: boolean;
+  favorito: boolean;
+}
+
+export interface IFilmesEstadoQuery {
+  imdbIds: string[];
 }
 
 export interface IFavorito {

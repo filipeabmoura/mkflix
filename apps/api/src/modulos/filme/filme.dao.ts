@@ -29,4 +29,17 @@ export class FilmeDAO {
       }
     });
   }
+
+  async findById(id: number): Promise<Filme | null> {
+    return this.client.filme.findUnique({ where: { id } });
+  }
+
+  async findManyPorImdbIds(imdbIds: string[]): Promise<Filme[]> {
+    if (imdbIds.length === 0) {
+      return [];
+    }
+    return this.client.filme.findMany({
+      where: { imdbId: { in: imdbIds } }
+    });
+  }
 }

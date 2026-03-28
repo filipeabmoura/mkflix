@@ -4,6 +4,7 @@ import { APP_FILTER, APP_GUARD } from "@nestjs/core";
 import { join } from "path";
 import { AuthModule } from "./modulos/auth/auth.module";
 import { FilmeModule } from "./modulos/filme/filme.module";
+import { ListasFilmeModule } from "./modulos/listas-filme/listas-filme.module";
 import { JwtAuthGuard } from "./core/auth/jwt-auth.guard";
 import { PermissaoGuard } from "./core/auth/permissao.guard";
 import { ClientModule } from "./core/client/client.module";
@@ -21,7 +22,8 @@ import { MkExceptionFilter } from "./core/filters/mk-exception.filter";
     }),
     ClientModule,
     AuthModule,
-    FilmeModule
+    FilmeModule,
+    ListasFilmeModule
   ],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },

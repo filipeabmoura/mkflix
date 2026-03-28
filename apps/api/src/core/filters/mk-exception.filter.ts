@@ -2,13 +2,6 @@ import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from "@nestjs/co
 import type { Response } from "express";
 import { MkException } from "../exceptions/mk.exception";
 
-type CorpoErroPadrao = {
-  statusCode: number;
-  message: string;
-  mkCode?: string;
-  tipo?: string;
-};
-
 @Catch(MkException, HttpException)
 export class MkExceptionFilter implements ExceptionFilter {
   catch(exception: MkException | HttpException, host: ArgumentsHost): void {
@@ -18,17 +11,16 @@ export class MkExceptionFilter implements ExceptionFilter {
     const payload = exception.getResponse();
 
     if (exception instanceof MkException) {
-      const body = payload as {
-        message: string;
-        mkCode: string;
-        tipo: string;
-      };
-      const corpo: CorpoErroPadrao = {
+      const body = payload as Record<string, unknown>;
+      const corpo: Record<string, unknown> = {
         statusCode: status,
         message: body.message,
         mkCode: body.mkCode,
         tipo: body.tipo
       };
+      if (body.detalhes !== undefined) {
+        corpo.detalhes = body.detalhes;
+      }
       response.status(status).json(corpo);
       return;
     }

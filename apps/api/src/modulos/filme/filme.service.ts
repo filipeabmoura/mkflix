@@ -40,4 +40,17 @@ export class FilmeService {
     });
     return filmeParaResposta(salvo);
   }
+
+  /**
+   * Filmes já persistidos localmente (sem OMDb), chave = imdbId em minúsculas.
+   */
+  async obterMapaFilmesPorImdbIds(imdbIds: string[]): Promise<Map<string, IFilme>> {
+    const normalizados = [...new Set(imdbIds.map((i) => i.toLowerCase()))];
+    const rows = await this.filmeDAO.findManyPorImdbIds(normalizados);
+    const mapa = new Map<string, IFilme>();
+    for (const row of rows) {
+      mapa.set(row.imdbId.toLowerCase(), filmeParaResposta(row));
+    }
+    return mapa;
+  }
 }
