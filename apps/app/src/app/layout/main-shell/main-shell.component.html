@@ -1,58 +1,59 @@
 <div class="shell" [class.shell--menu-aberto]="menuAberto">
-  <aside
-    id="menu-lateral"
-    class="shell__sidebar"
-    [attr.aria-hidden]="!menuAberto"
-  >
-    <div class="shell__brand">MkFlix</div>
-    <nav class="shell__nav" aria-label="Principal">
-      <a
-        routerLink="/home"
-        routerLinkActive="shell__link--ativo"
-        [routerLinkActiveOptions]="{ exact: true }"
-        (click)="fecharMenu()"
-        >Início</a
-      >
-      <a
-        routerLink="/assistidos"
-        routerLinkActive="shell__link--ativo"
-        (click)="fecharMenu()"
-        >Assistidos</a
-      >
-      <a
-        routerLink="/favoritos"
-        routerLinkActive="shell__link--ativo"
-        (click)="fecharMenu()"
-        >Favoritos</a
-      >
-    </nav>
-  </aside>
-  <div
-    class="shell__backdrop"
-    *ngIf="menuAberto"
-    (click)="fecharMenu()"
-    aria-hidden="true"
-  ></div>
-  <div class="shell__main">
-    <header class="shell__header">
-      <button
-        type="button"
-        class="shell__hamburger"
-        (click)="alternarMenu()"
-        [attr.aria-expanded]="menuAberto"
-        aria-controls="menu-lateral"
-        aria-label="Menu"
-      >
-        <span></span><span></span><span></span>
-      </button>
-      <span class="shell__header-title">{{ tituloPagina }}</span>
-      <div class="shell__user">
-        <span class="shell__user-name">{{ nomeUsuario }}</span>
-        <button type="button" class="shell__logout" (click)="sair()">
-          Sair
-        </button>
-      </div>
-    </header>
+  <header class="shell__header">
+    <button
+      type="button"
+      class="shell__hamburger"
+      (click)="alternarMenu()"
+      [attr.aria-expanded]="menuAberto"
+      aria-controls="menu-lateral"
+      aria-label="Menu"
+    >
+      <span></span><span></span><span></span>
+    </button>
+    <span class="shell__header-title">{{ tituloPagina }}</span>
+    <div class="shell__user">
+      <span class="shell__user-name">{{ nomeUsuario }}</span>
+      <button type="button" class="shell__logout" (click)="sair()">Sair</button>
+    </div>
+  </header>
+
+  <div class="shell__body">
+    <aside
+      id="menu-lateral"
+      class="shell__sidebar"
+      [attr.aria-hidden]="!menuAberto"
+    >
+      <div class="shell__brand">MkFlix</div>
+      <nav class="shell__nav" aria-label="Principal">
+        <a
+          routerLink="/home"
+          routerLinkActive="shell__link--ativo"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="fecharMenu()"
+          >Início</a
+        >
+        <a
+          routerLink="/assistidos"
+          routerLinkActive="shell__link--ativo"
+          (click)="fecharMenu()"
+          >Assistidos</a
+        >
+        <a
+          routerLink="/favoritos"
+          routerLinkActive="shell__link--ativo"
+          (click)="fecharMenu()"
+          >Favoritos</a
+        >
+      </nav>
+    </aside>
+
+    <div
+      class="shell__backdrop"
+      *ngIf="menuAberto"
+      (click)="fecharMenu()"
+      aria-hidden="true"
+    ></div>
+
     <main class="shell__content">
       <router-outlet></router-outlet>
     </main>
