@@ -19,6 +19,8 @@ export interface ILinhaHomeFilme {
   filmeId: number | null;
 }
 
+const OMDB_PAGE_SIZE = 10;
+
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
@@ -29,30 +31,16 @@ export class HomeComponent {
   grid?: DxDataGridComponent;
 
   termoBusca = "";
-
   erroBusca: string | null = null;
-
   carregandoBusca = false;
-
   dataSource: CustomStore;
-
   popupVisivel = false;
-
   popupTitulo = "";
-
   popupTexto = "";
 
   private resolverPopup?: (valor: boolean) => void;
-
-  private linhas: ILinhaHomeFilme[] = [];
-
   private totalOmdb = 0;
-
-  private proximaPaginaOmdb = 1;
-
   private termoAtivo = "";
-
-  private fimOmdb = false;
 
   constructor(private readonly catalogo: FilmeCatalogoService) {
     this.dataSource = this.criarStore();
@@ -72,15 +60,10 @@ export class HomeComponent {
       return;
     }
     this.termoAtivo = termo;
-    this.linhas = [];
     this.totalOmdb = 0;
-    this.proximaPaginaOmdb = 1;
-    this.fimOmdb = false;
     this.erroBusca = null;
     this.dataSource = this.criarStore();
-    queueMicrotask(() => {
-      this.grid?.instance.refresh();
-    });
+    queueMicrotask(() => this.grid?.instance.refresh());
   }
 
   private async executarCarga(
@@ -89,57 +72,63 @@ export class HomeComponent {
     if (this.termoAtivo.trim().length === 0) {
       return { data: [], totalCount: 0 };
     }
+
     const skip = loadOptions.skip ?? 0;
     const take = loadOptions.take ?? 20;
-    const precisa = skip + take;
+
+    /**
+     * Calcula quais páginas da OMDb (base 10 itens/pág) cobrem
+     * o intervalo [skip, skip+take) do grid.
+     *
+     * Exemplo — pageSize=20, página 1 do grid (skip=0, take=20):
+     *   startOmdb=1, endOmdb=2 → busca pages 1 e 2
+     *   startOffset = 0 % 10 = 0 → slice(0, 20)
+     *
+     * Exemplo — pageSize=20, página 11 do grid (skip=200, take=20):
+     *   startOmdb=21, endOmdb=22 → busca pages 21 e 22
+     *   startOffset = 200 % 10 = 0 → slice(0, 20)
+     */
+    const startOmdbPage = Math.floor(skip / OMDB_PAGE_SIZE) + 1;
+    const endOmdbPage = Math.ceil((skip + take) / OMDB_PAGE_SIZE);
+
     this.erroBusca = null;
     this.carregandoBusca = true;
+
     try {
-      await this.garantirLinhasAte(precisa);
-      const fatia = this.linhas.slice(skip, skip + take);
-      return { data: fatia, totalCount: this.totalOmdb };
+      // Busca paralela de todas as páginas OMDb necessárias
+      const fetches = Array.from(
+        { length: endOmdbPage - startOmdbPage + 1 },
+        (_, i) =>
+          firstValueFrom(
+            this.catalogo.buscar({ q: this.termoAtivo, page: startOmdbPage + i })
+          )
+      );
+      const respostas = await Promise.all(fetches);
+
+      // totalResults é o mesmo em qualquer página do mesmo termo
+      this.totalOmdb = respostas[0].totalResultados;
+
+      // Junta todos os itens recebidos
+      const combined: IOmdbResultadoBusca[] = respostas.flatMap((r) => r.itens);
+
+      // Fatia exatamente o que o grid pediu
+      const startOffset = skip % OMDB_PAGE_SIZE;
+      const pageItens = combined.slice(startOffset, startOffset + take);
+
+      const linhas = pageItens.map((item) => this.mapearLinha(item));
+
+      // Busca estado (assistido/favorito) em lote para esta página
+      await this.aplicarEstadoNasLinhas(linhas);
+
+      return { data: linhas, totalCount: this.totalOmdb };
     } catch (erro: unknown) {
-      if (erro instanceof HttpErrorResponse) {
-        this.erroBusca = mensagemErroHttp(erro);
-      } else {
-        this.erroBusca = "Erro ao buscar filmes.";
-      }
+      this.erroBusca =
+        erro instanceof HttpErrorResponse
+          ? mensagemErroHttp(erro)
+          : "Erro ao buscar filmes.";
       return { data: [], totalCount: 0 };
     } finally {
       this.carregandoBusca = false;
-    }
-  }
-
-  private async garantirLinhasAte(precisa: number): Promise<void> {
-    const termo = this.termoAtivo;
-    while (true) {
-      if (this.linhas.length >= precisa) {
-        break;
-      }
-      if (this.totalOmdb > 0 && this.linhas.length >= this.totalOmdb) {
-        break;
-      }
-      if (this.fimOmdb) {
-        break;
-      }
-      const resposta = await firstValueFrom(
-        this.catalogo.buscar({ q: termo, page: this.proximaPaginaOmdb })
-      );
-      if (this.proximaPaginaOmdb === 1) {
-        this.totalOmdb = resposta.totalResultados;
-      }
-      const novosItens = resposta.itens;
-      if (novosItens.length === 0) {
-        this.fimOmdb = true;
-        break;
-      }
-      const novasLinhas = novosItens.map((item) => this.mapearLinha(item));
-      this.linhas.push(...novasLinhas);
-      this.proximaPaginaOmdb += 1;
-      if (novosItens.length < 10) {
-        this.fimOmdb = true;
-      }
-      await this.aplicarEstadoNasLinhas(novasLinhas.map((l) => l.imdbId));
     }
   }
 
@@ -155,27 +144,42 @@ export class HomeComponent {
     };
   }
 
-  private async aplicarEstadoNasLinhas(ids: string[]): Promise<void> {
-    if (ids.length === 0) {
-      return;
-    }
-    const estados = await firstValueFrom(this.catalogo.filmesEstado(ids));
-    const mapa = new Map(
-      estados.map((e) => [e.imdbId.toLowerCase(), e] as const)
-    );
-    const conjunto = new Set(ids.map((id) => id.toLowerCase()));
-    for (const linha of this.linhas) {
-      if (!conjunto.has(linha.imdbId)) {
-        continue;
+  private async aplicarEstadoNasLinhas(linhas: ILinhaHomeFilme[]): Promise<void> {
+    if (linhas.length === 0) return;
+    try {
+      const ids = linhas.map((l) => l.imdbId);
+      const estados = await firstValueFrom(this.catalogo.filmesEstado(ids));
+      const mapa = new Map(estados.map((e) => [e.imdbId.toLowerCase(), e] as const));
+      for (const linha of linhas) {
+        const estado = mapa.get(linha.imdbId);
+        if (estado !== undefined) {
+          linha.assistido = estado.assistido;
+          linha.favorito = estado.favorito;
+          linha.filmeId = estado.filmeId ?? null;
+        }
       }
-      const estado = mapa.get(linha.imdbId);
-      if (estado !== undefined) {
+    } catch {
+      // Estado não crítico: grid carrega sem estado em caso de falha
+    }
+  }
+
+  private async sincronizarLinha(linha: ILinhaHomeFilme): Promise<void> {
+    try {
+      const estados = await firstValueFrom(
+        this.catalogo.filmesEstado([linha.imdbId])
+      );
+      const estado = estados[0];
+      if (estado) {
         linha.assistido = estado.assistido;
         linha.favorito = estado.favorito;
         linha.filmeId = estado.filmeId ?? null;
       }
+    } catch {
+      // silencia
     }
   }
+
+  // ── Popup ──────────────────────────────────────────────────────────
 
   private confirmar(titulo: string, texto: string): Promise<boolean> {
     return new Promise((resolve) => {
@@ -208,123 +212,99 @@ export class HomeComponent {
   }
 
   private recarregarGrid(): void {
-    const fonte = this.grid?.instance.getDataSource();
-    fonte?.reload();
+    this.grid?.instance.refresh();
   }
+
+  // ── Ações ─────────────────────────────────────────────────────────
 
   async aoAlternarAssistido(linha: ILinhaHomeFilme): Promise<void> {
     if (linha.assistido) {
-      if (linha.filmeId === null) {
-        await this.aplicarEstadoNasLinhas([linha.imdbId]);
-      }
-      if (linha.filmeId === null) {
-        return;
-      }
+      if (linha.filmeId === null) await this.sincronizarLinha(linha);
+      if (linha.filmeId === null) return;
+
       const ok = await this.confirmar(
         "Remover assistido",
         "Remover dos assistidos também remove o favorito deste filme. Continuar?"
       );
-      if (!ok) {
-        return;
-      }
+      if (!ok) return;
+
       try {
         await firstValueFrom(this.catalogo.removerAssistido(linha.filmeId));
-        linha.assistido = false;
-        linha.favorito = false;
         this.recarregarGrid();
-      } catch (erro: unknown) {
+      } catch (e: unknown) {
         this.erroBusca =
-          erro instanceof HttpErrorResponse
-            ? mensagemErroHttp(erro)
+          e instanceof HttpErrorResponse
+            ? mensagemErroHttp(e)
             : "Erro ao remover assistido.";
       }
       return;
     }
+
     const ok = await this.confirmar(
       "Marcar assistido",
       `Marcar "${linha.titulo}" como assistido?`
     );
-    if (!ok) {
-      return;
-    }
+    if (!ok) return;
+
     try {
-      const criado = await firstValueFrom(
-        this.catalogo.marcarAssistido(linha.imdbId)
-      );
-      linha.assistido = true;
-      linha.filmeId = criado.filmeId;
-      await this.aplicarEstadoNasLinhas([linha.imdbId]);
+      await firstValueFrom(this.catalogo.marcarAssistido(linha.imdbId));
       this.recarregarGrid();
-    } catch (erro: unknown) {
+    } catch (e: unknown) {
       this.erroBusca =
-        erro instanceof HttpErrorResponse
-          ? mensagemErroHttp(erro)
+        e instanceof HttpErrorResponse
+          ? mensagemErroHttp(e)
           : "Erro ao marcar assistido.";
     }
   }
 
   async aoAlternarFavorito(linha: ILinhaHomeFilme): Promise<void> {
     if (linha.favorito) {
-      if (linha.filmeId === null) {
-        await this.aplicarEstadoNasLinhas([linha.imdbId]);
-      }
-      if (linha.filmeId === null) {
-        return;
-      }
+      if (linha.filmeId === null) await this.sincronizarLinha(linha);
+      if (linha.filmeId === null) return;
+
       const ok = await this.confirmar(
         "Remover favorito",
         `Remover "${linha.titulo}" dos favoritos?`
       );
-      if (!ok) {
-        return;
-      }
+      if (!ok) return;
+
       try {
         await firstValueFrom(this.catalogo.removerFavorito(linha.filmeId));
-        linha.favorito = false;
         this.recarregarGrid();
-      } catch (erro: unknown) {
+      } catch (e: unknown) {
         this.erroBusca =
-          erro instanceof HttpErrorResponse
-            ? mensagemErroHttp(erro)
+          e instanceof HttpErrorResponse
+            ? mensagemErroHttp(e)
             : "Erro ao remover favorito.";
       }
       return;
     }
+
     try {
       await firstValueFrom(this.catalogo.marcarFavorito(linha.imdbId));
-      linha.favorito = true;
-      await this.aplicarEstadoNasLinhas([linha.imdbId]);
       this.recarregarGrid();
-    } catch (erro: unknown) {
-      if (erro instanceof HttpErrorResponse) {
-        const api = extrairErroApi(erro);
+    } catch (e: unknown) {
+      if (e instanceof HttpErrorResponse) {
+        const api = extrairErroApi(e);
         if (api?.mkCode === EApiCodes.Favorito_Sem_Assistido) {
           const ok = await this.confirmar(
             "Favoritar",
             "É preciso marcar como assistido antes. Deseja marcar como assistido e favoritar agora?"
           );
-          if (!ok) {
-            return;
-          }
+          if (!ok) return;
           try {
-            const assistido = await firstValueFrom(
-              this.catalogo.marcarAssistido(linha.imdbId)
-            );
-            linha.assistido = true;
-            linha.filmeId = assistido.filmeId;
+            await firstValueFrom(this.catalogo.marcarAssistido(linha.imdbId));
             await firstValueFrom(this.catalogo.marcarFavorito(linha.imdbId));
-            linha.favorito = true;
-            await this.aplicarEstadoNasLinhas([linha.imdbId]);
             this.recarregarGrid();
-          } catch (erro2: unknown) {
+          } catch (e2: unknown) {
             this.erroBusca =
-              erro2 instanceof HttpErrorResponse
-                ? mensagemErroHttp(erro2)
+              e2 instanceof HttpErrorResponse
+                ? mensagemErroHttp(e2)
                 : "Erro ao favoritar.";
           }
           return;
         }
-        this.erroBusca = mensagemErroHttp(erro);
+        this.erroBusca = mensagemErroHttp(e);
         return;
       }
       this.erroBusca = "Erro ao favoritar.";
