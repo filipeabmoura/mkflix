@@ -1,0 +1,132 @@
+<app-mk-page-title
+  titulo="Detalhe do Usuário"
+  subtitulo="Listas de assistidos e favoritos do usuário"
+></app-mk-page-title>
+
+<app-mk-alert tipo="erro" [mensagem]="erro"></app-mk-alert>
+
+<div *ngIf="carregando" class="carregando">Carregando...</div>
+
+<ng-container *ngIf="!carregando && detalhe">
+  <div class="usuario-card">
+    <div class="usuario-info">
+      <span class="usuario-nome">{{ detalhe.usuario.nome }}</span>
+      <span class="usuario-email">{{ detalhe.usuario.email }}</span>
+    </div>
+    <span
+      class="badge"
+      [class.badge--admin]="detalhe.usuario.tipo === 'admin'"
+      [class.badge--comum]="detalhe.usuario.tipo === 'comum'"
+    >{{ detalhe.usuario.tipo }}</span>
+  </div>
+
+  <div class="secao">
+    <h3 class="secao-titulo">
+      Assistidos
+      <span class="secao-total">({{ assistidos.length }})</span>
+    </h3>
+    <div class="grid-wrap">
+      <dx-data-grid
+        [dataSource]="assistidos"
+        [showBorders]="true"
+        [columnAutoWidth]="true"
+        [rowAlternationEnabled]="true"
+        [hoverStateEnabled]="true"
+        [paging]="{ pageSize: 10 }"
+        [pager]="{
+          visible: true,
+          displayMode: 'full',
+          showInfo: true,
+          infoText: 'Página {0} de {1} ({2} filmes)',
+          showNavigationButtons: true,
+          showPageSizeSelector: true,
+          allowedPageSizes: [5, 10, 20]
+        }"
+        noDataText="Nenhum filme assistido."
+      >
+        <dxi-column
+          caption="Poster"
+          cellTemplate="posterAssistidoCell"
+          [width]="80"
+        ></dxi-column>
+        <dxi-column dataField="filme.titulo" caption="Título"></dxi-column>
+        <dxi-column dataField="filme.ano" caption="Ano" [width]="88"></dxi-column>
+        <dxi-column
+          dataField="marcadoEm"
+          caption="Assistido em"
+          dataType="datetime"
+          format="dd/MM/yyyy HH:mm"
+        ></dxi-column>
+
+        <div *dxTemplate="let cell of 'posterAssistidoCell'">
+          <img
+            *ngIf="cell.data.filme.posterUrl"
+            [src]="cell.data.filme.posterUrl"
+            class="thumb"
+            alt=""
+          />
+          <span *ngIf="!cell.data.filme.posterUrl" class="thumb thumb--empty">—</span>
+        </div>
+      </dx-data-grid>
+    </div>
+  </div>
+
+  <div class="secao">
+    <h3 class="secao-titulo">
+      Favoritos
+      <span class="secao-total">({{ favoritos.length }})</span>
+    </h3>
+    <div class="grid-wrap">
+      <dx-data-grid
+        [dataSource]="favoritos"
+        [showBorders]="true"
+        [columnAutoWidth]="true"
+        [rowAlternationEnabled]="true"
+        [hoverStateEnabled]="true"
+        [paging]="{ pageSize: 10 }"
+        [pager]="{
+          visible: true,
+          displayMode: 'full',
+          showInfo: true,
+          infoText: 'Página {0} de {1} ({2} filmes)',
+          showNavigationButtons: true,
+          showPageSizeSelector: true,
+          allowedPageSizes: [5, 10, 20]
+        }"
+        noDataText="Nenhum favorito."
+      >
+        <dxi-column
+          caption="Poster"
+          cellTemplate="posterFavoritoCell"
+          [width]="80"
+        ></dxi-column>
+        <dxi-column dataField="filme.titulo" caption="Título"></dxi-column>
+        <dxi-column dataField="filme.ano" caption="Ano" [width]="88"></dxi-column>
+        <dxi-column
+          dataField="marcadoEm"
+          caption="Favoritado em"
+          dataType="datetime"
+          format="dd/MM/yyyy HH:mm"
+        ></dxi-column>
+
+        <div *dxTemplate="let cell of 'posterFavoritoCell'">
+          <img
+            *ngIf="cell.data.filme.posterUrl"
+            [src]="cell.data.filme.posterUrl"
+            class="thumb"
+            alt=""
+          />
+          <span *ngIf="!cell.data.filme.posterUrl" class="thumb thumb--empty">—</span>
+        </div>
+      </dx-data-grid>
+    </div>
+  </div>
+
+  <div class="voltar-wrap">
+    <app-mk-button
+      label="← Voltar à lista"
+      variante="secundaria"
+      (clique)="voltar()"
+    ></app-mk-button>
+  </div>
+</ng-container>
