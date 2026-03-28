@@ -50,12 +50,26 @@ export class MainShellComponent implements OnInit, OnDestroy {
     return this.auth.usuarioAtual?.nome ?? "";
   }
 
+  get isAdmin(): boolean {
+    return this.auth.usuarioAtual?.tipo === "admin";
+  }
+
   private atualizarTitulo(): void {
     const url = this.router.url.split("?")[0];
     if (url.startsWith("/assistidos")) {
       this.tituloPagina = "Assistidos";
     } else if (url.startsWith("/favoritos")) {
       this.tituloPagina = "Favoritos";
+    } else if (url.includes("/admin/rankings/assistidos")) {
+      this.tituloPagina = "Ranking — Assistidos";
+    } else if (url.includes("/admin/rankings/favoritos")) {
+      this.tituloPagina = "Ranking — Favoritos";
+    } else if (/\/admin\/usuarios\/\d+/.test(url)) {
+      this.tituloPagina = "Detalhe do Usuário";
+    } else if (url.startsWith("/admin/usuarios")) {
+      this.tituloPagina = "Usuários";
+    } else if (url.startsWith("/admin/cadastrar-admin")) {
+      this.tituloPagina = "Cadastrar Admin";
     } else {
       this.tituloPagina = "Início";
     }
