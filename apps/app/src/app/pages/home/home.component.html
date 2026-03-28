@@ -1,8 +1,110 @@
 <app-mk-page-title
-  titulo="Início"
-  subtitulo="Na próxima etapa você buscará filmes na OMDb e gerenciará favoritos por aqui."
+  titulo="Buscar filmes"
+  subtitulo="OMDb: uma requisição por página; a grade carrega mais resultados ao avançar as páginas (20 itens por página)."
 ></app-mk-page-title>
 
-<p class="home__texto">
-  Use o menu para ver <strong>Assistidos</strong> e <strong>Favoritos</strong>.
-</p>
+<app-mk-alert tipo="erro" [mensagem]="erroBusca"></app-mk-alert>
+
+<div class="busca-linha">
+  <input
+    type="search"
+    [(ngModel)]="termoBusca"
+    (keyup.enter)="buscar()"
+    class="busca-input"
+    placeholder="Ex.: Batman"
+    aria-label="Termo de busca"
+  />
+  <app-mk-button
+    label="Buscar"
+    [loading]="carregandoBusca"
+    (clique)="buscar()"
+  ></app-mk-button>
+</div>
+
+<div class="grid-wrap">
+  <dx-data-grid
+    [dataSource]="dataSource"
+    [remoteOperations]="false"
+    [showBorders]="true"
+    [columnAutoWidth]="true"
+    [rowAlternationEnabled]="true"
+    [hoverStateEnabled]="true"
+    [paging]="{ pageSize: 20 }"
+    [pager]="{ showPageSizeSelector: false, showInfo: true }"
+    noDataText="Nenhum resultado. Use o campo acima e clique em Buscar."
+  >
+    <dxi-column
+      caption="Poster"
+      cellTemplate="posterCell"
+      [width]="96"
+    ></dxi-column>
+    <dxi-column dataField="titulo" caption="Título"></dxi-column>
+    <dxi-column dataField="ano" caption="Ano" [width]="88"></dxi-column>
+    <dxi-column dataField="imdbId" caption="IMDb" [width]="120"></dxi-column>
+    <dxi-column
+      caption="Ações"
+      cellTemplate="acoesCell"
+      [width]="200"
+      alignment="center"
+    ></dxi-column>
+
+    <div *dxTemplate="let cell of 'posterCell'">
+      <img
+        *ngIf="cell.data.posterUrl"
+        [src]="cell.data.posterUrl"
+        class="thumb"
+        alt=""
+      />
+      <span *ngIf="!cell.data.posterUrl" class="thumb thumb--empty">—</span>
+    </div>
+
+    <div *dxTemplate="let cell of 'acoesCell'">
+      <div class="acoes">
+        <button
+          type="button"
+          class="acao"
+          [class.acao--on]="cell.data.assistido"
+          (click)="aoAlternarAssistido(cell.data)"
+          [attr.aria-pressed]="cell.data.assistido"
+          title="Assistido"
+        >
+          ✓
+        </button>
+        <button
+          type="button"
+          class="acao"
+          [class.acao--on]="cell.data.favorito"
+          (click)="aoAlternarFavorito(cell.data)"
+          [attr.aria-pressed]="cell.data.favorito"
+          title="Favorito"
+        >
+          ♥
+        </button>
+      </div>
+    </div>
+  </dx-data-grid>
+</div>
+
+<dx-popup
+  [width]="420"
+  [showCloseButton]="true"
+  [shading]="true"
+  [(visible)]="popupVisivel"
+  [title]="popupTitulo"
+  (onHidden)="aoPopupOculto()"
+>
+  <div *dxTemplate="let _ of 'content'">
+    <p class="popup-texto">{{ popupTexto }}</p>
+    <div class="popup-acoes">
+      <app-mk-button
+        label="Cancelar"
+        variante="secundaria"
+        (clique)="popupCancelar()"
+      ></app-mk-button>
+      <app-mk-button
+        label="Confirmar"
+        (clique)="popupConfirmar()"
+      ></app-mk-button>
+    </div>
+  </div>
+</dx-popup>
