@@ -1,16 +1,17 @@
-<app-mk-page-title
-  titulo="Cadastrar Admin"
-  subtitulo="Crie uma conta para um novo administrador"
-></app-mk-page-title>
+<div class="pagina-centro">
+  <div class="form-card">
+    <app-mk-page-title
+      titulo="Cadastrar Admin"
+      subtitulo="Crie uma conta para um novo administrador"
+    ></app-mk-page-title>
 
-<app-mk-alert tipo="erro" [mensagem]="erro"></app-mk-alert>
+    <app-mk-alert tipo="erro" [mensagem]="erro"></app-mk-alert>
 
-<div *ngIf="sucesso" class="alerta-sucesso">
-  {{ sucesso }}
-</div>
+    <div *ngIf="sucesso" class="alerta-sucesso">
+      {{ sucesso }}
+    </div>
 
-<div class="form-card">
-  <form [formGroup]="form" (ngSubmit)="enviar()" novalidate>
+    <form [formGroup]="form" (ngSubmit)="enviar()" novalidate>
     <div class="campo">
       <label for="nome">Nome</label>
       <input
@@ -58,6 +59,7 @@
       tipoHtml="submit"
       [loading]="enviando"
       [larguraTotal]="true"
-    ></app-mk-button>
-  </form>
+    >    </app-mk-button>
+    </form>
+  </div>
 </div>

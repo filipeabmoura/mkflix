@@ -1,7 +1,22 @@
+:host {
+  display: block;
+  min-height: calc(100vh - 60px);
+}
+
+.pagina-centro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: inherit;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
 .form-card {
   background: #fff;
   border-radius: 10px;
   padding: 1.75rem;
+  width: 100%;
   max-width: 480px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
