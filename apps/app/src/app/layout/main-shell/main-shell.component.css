@@ -1,0 +1,186 @@
+:host {
+  --header-h: 60px;
+}
+
+/* ── Estrutura principal ─────────────────────────────────────────── */
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--mk-cream, #f5f5ed);
+}
+
+/* ── Cabeçalho full-width navy ───────────────────────────────────── */
+.shell__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1rem;
+  height: var(--header-h);
+  background: linear-gradient(to right, #1b1d36 0%, #ffffff 100%);
+  border-bottom: 2px solid rgba(173, 150, 220, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* ── Logo no cabeçalho ───────────────────────────────────────────── */
+.shell__logo {
+  height: 34px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* ── Corpo (sidebar + conteúdo) ──────────────────────────────────── */
+.shell__body {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+/* ── Barra lateral navy ──────────────────────────────────────────── */
+.shell__sidebar {
+  flex-shrink: 0;
+  width: 0;
+  overflow: hidden;
+  background: var(--mk-navy, #1b1d36);
+  color: #fff;
+  padding: 0;
+  box-sizing: border-box;
+  transition: width 0.25s ease, padding 0.25s ease;
+}
+
+.shell__sidebar * {
+  white-space: nowrap;
+}
+
+.shell--menu-aberto .shell__sidebar {
+  width: 240px;
+  padding: 1.25rem 1rem;
+  overflow-y: auto;
+}
+
+/* ── Navegação ───────────────────────────────────────────────────── */
+.shell__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.shell__nav a {
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  padding: 0.55rem 0.65rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.shell__nav a:hover {
+  background: rgba(173, 150, 220, 0.12);
+  color: #fff;
+}
+
+.shell__link--ativo {
+  background: rgba(173, 150, 220, 0.22);
+  color: var(--mk-purple, #ad96dc) !important;
+  font-weight: 600;
+}
+
+/* ── Separador / label admin ─────────────────────────────────────── */
+.shell__nav-sep {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 1rem 0 0.75rem;
+}
+
+.shell__nav-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mk-purple, #ad96dc);
+  padding: 0 0.65rem;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+/* ── Área de conteúdo ────────────────────────────────────────────── */
+.shell__content {
+  flex: 1;
+  position: relative;
+  padding: 1.25rem 1rem 2rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+
+/* ── Hambúrguer (branco sobre navy) ─────────────────────────────── */
+.shell__hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0.35rem;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.shell__hamburger:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.shell__hamburger span {
+  display: block;
+  height: 2px;
+  background: #fff;
+  border-radius: 1px;
+}
+
+/* ── Usuário + Sair ──────────────────────────────────────────────── */
+.shell__user {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.shell__user-name {
+  font-size: 0.9rem;
+  color: var(--mk-navy, #1b1d36);
+  font-weight: 600;
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shell__logout {
+  border: 1px solid var(--mk-navy, #1b1d36);
+  background: transparent;
+  color: var(--mk-navy, #1b1d36);
+  border-radius: 8px;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: var(--mk-font, inherit);
+  font-weight: 600;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.shell__logout:hover {
+  background: var(--mk-navy, #1b1d36);
+  color: #fff;
+}
+

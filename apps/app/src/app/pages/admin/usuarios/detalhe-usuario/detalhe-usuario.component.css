@@ -1,0 +1,56 @@
+@import "../../admin-shared.css";
+
+.carregando {
+  padding: 2rem;
+  text-align: center;
+  color: #888;
+}
+
+.usuario-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  margin-bottom: 1.5rem;
+}
+
+.usuario-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.25rem;
+}
+
+.usuario-nome {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.usuario-email {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.secao {
+  margin-bottom: 1.75rem;
+}
+
+.secao-titulo {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: #222;
+}
+
+.secao-total {
+  font-weight: 400;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.voltar-wrap {
+  margin-top: 0.5rem;
+}

@@ -1,0 +1,18 @@
+.mk-page-title {
+  margin-bottom: 1.25rem;
+}
+
+.mk-page-title__heading {
+  margin: 0 0 0.35rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--mk-navy, #1b1d36);
+  font-family: var(--mk-font, inherit);
+}
+
+.mk-page-title__sub {
+  margin: 0;
+  color: var(--mk-gray-dark, #545457);
+  font-size: 0.95rem;
+  font-family: var(--mk-font, inherit);
+}

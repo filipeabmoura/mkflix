@@ -1,5 +1,77 @@
+/* ── Fonte Sora ──────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Sora";
+  src: url("/fonts/Sora-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Variáveis de marca Microkids ───────────────────────────────── */
+:root {
+  --mk-navy:        #1b1d36;
+  --mk-white:       #ffffff;
+  --mk-purple:      #ad96dc;
+  --mk-purple-light:#c1a7e2;
+  --mk-cyan:        #05c3dd;
+  --mk-green:       #a9c23f;
+  --mk-red:         #c10016;
+  --mk-charcoal:    #38383d;
+  --mk-gray-dark:   #545457;
+  --mk-gray-medium: #adb2b8;
+  --mk-cream:       #f5f5ed;
+  --mk-radius-lg:   16px;
+  --mk-font: Sora, "roboto fallback", -apple-system, BlinkMacSystemFont,
+    "avenir next", avenir, "segoe ui", "helvetica neue", "adwaita sans",
+    cantarell, ubuntu, noto, helvetica, arial, sans-serif;
+}
+
+/* ── Base global ─────────────────────────────────────────────────── */
 html,
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  min-height: 100%;
+  font-family: var(--mk-font);
+  background: var(--mk-navy);
+  color: var(--mk-charcoal);
+  line-height: 1.5;
+}
+
+/* ── DevExtreme — border-radius Microkids (16px) ─────────────────── */
+.dx-bordered-top-view,
+.dx-datagrid-headers {
+  border-radius: 16px 16px 0 0;
+}
+
+.dx-bordered-bottom-view {
+  border-radius: 0 0 16px 16px;
+}
+
+.dx-empty,
+.dx-datagrid-content {
+  border-radius: 16px;
+}
+
+.dx-datagrid-header-panel {
+  border: 0;
+}
+
+/* ── DevExtreme — popup compacto ────────────────────────────────── */
+.dx-overlay-content .popup-texto {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin: 0 0 1.25rem;
+  color: var(--mk-navy, #1b1d36);
+}
+
+.dx-overlay-content .popup-acoes {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+/* ── DevExtreme — accent → roxo Microkids ───────────────────────── */
+.dx-state-focused.dx-texteditor,
+.dx-texteditor.dx-state-active {
+  border-color: var(--mk-purple) !important;
 }

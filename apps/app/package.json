@@ -18,6 +18,9 @@
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
+    "@mk/model": "workspace:*",
+    "devextreme": "^24.1.8",
+    "devextreme-angular": "^24.1.8",
     "rxjs": "^7.8.1",
     "zone.js": "^0.14.0"
   },

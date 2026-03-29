@@ -1,0 +1,28 @@
+.mk-alert {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  font-family: var(--mk-font, inherit);
+}
+
+/* Erro — vermelho Microkids */
+.mk-alert--erro {
+  background: rgba(193, 0, 22, 0.08);
+  color: #7a000e;
+  border: 1px solid rgba(193, 0, 22, 0.3);
+}
+
+/* Sucesso — verde Microkids */
+.mk-alert--sucesso {
+  background: rgba(169, 194, 63, 0.12);
+  color: #4a5c00;
+  border: 1px solid rgba(169, 194, 63, 0.4);
+}
+
+/* Info — roxo Microkids */
+.mk-alert--info {
+  background: rgba(173, 150, 220, 0.1);
+  color: var(--mk-navy, #1b1d36);
+  border: 1px solid rgba(173, 150, 220, 0.35);
+}

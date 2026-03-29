@@ -1,0 +1,85 @@
+<div class="shell" [class.shell--menu-aberto]="menuAberto">
+  <header class="shell__header">
+    <button
+      type="button"
+      class="shell__hamburger"
+      (click)="alternarMenu()"
+      [attr.aria-expanded]="menuAberto"
+      aria-controls="menu-lateral"
+      aria-label="Menu"
+    >
+      <span></span><span></span><span></span>
+    </button>
+    <img src="/images/mkflix-logo.png" alt="MkFlix" class="shell__logo" />
+    <div class="shell__user">
+      <span class="shell__user-name">{{ nomeUsuario }}</span>
+      <button type="button" class="shell__logout" (click)="sair()">Sair</button>
+    </div>
+  </header>
+
+  <div class="shell__body">
+    <aside
+      id="menu-lateral"
+      class="shell__sidebar"
+      [attr.aria-hidden]="!menuAberto"
+    >
+      <nav class="shell__nav" aria-label="Principal">
+        <a
+          routerLink="/home"
+          routerLinkActive="shell__link--ativo"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="fecharMenu()"
+          >Início</a
+        >
+        <a
+          routerLink="/assistidos"
+          routerLinkActive="shell__link--ativo"
+          (click)="fecharMenu()"
+          >Assistidos</a
+        >
+        <a
+          routerLink="/favoritos"
+          routerLinkActive="shell__link--ativo"
+          (click)="fecharMenu()"
+          >Favoritos</a
+        >
+      </nav>
+
+      <ng-container *ngIf="isAdmin">
+        <div class="shell__nav-sep"></div>
+        <span class="shell__nav-label">Área Admin</span>
+        <nav class="shell__nav" aria-label="Administração">
+          <a
+            routerLink="/admin/rankings/assistidos"
+            routerLinkActive="shell__link--ativo"
+            (click)="fecharMenu()"
+            >Ranking Assistidos</a
+          >
+          <a
+            routerLink="/admin/rankings/favoritos"
+            routerLinkActive="shell__link--ativo"
+            (click)="fecharMenu()"
+            >Ranking Favoritos</a
+          >
+          <a
+            routerLink="/admin/usuarios"
+            routerLinkActive="shell__link--ativo"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="fecharMenu()"
+            >Usuários</a
+          >
+          <a
+            routerLink="/admin/cadastrar-admin"
+            routerLinkActive="shell__link--ativo"
+            (click)="fecharMenu()"
+            >Cadastrar Admin</a
+          >
+        </nav>
+      </ng-container>
+    </aside>
+
+    <main class="shell__content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

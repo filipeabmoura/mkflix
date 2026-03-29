@@ -1,0 +1,80 @@
+/* ── Wrapper centralizado (fundo navy vem do body global) ────────── */
+.auth-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+.auth-logo {
+  height: 56px;
+  object-fit: contain;
+  margin-bottom: 2rem;
+}
+
+/* ── Card branco ─────────────────────────────────────────────────── */
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  padding: 2rem 1.75rem;
+  border-radius: var(--mk-radius-lg, 16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22);
+}
+
+/* ── Campos ──────────────────────────────────────────────────────── */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.campo__label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--mk-navy, #1b1d36);
+  font-family: var(--mk-font, inherit);
+}
+
+.campo__input {
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--mk-gray-medium, #adb2b8);
+  font-size: 1rem;
+  font-family: var(--mk-font, inherit);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.campo__input:focus {
+  outline: none;
+  border-color: var(--mk-purple, #ad96dc);
+  box-shadow: 0 0 0 3px rgba(173, 150, 220, 0.2);
+}
+
+.campo__erro {
+  font-size: 0.8rem;
+  color: var(--mk-red, #c10016);
+}
+
+/* ── Rodapé / link ───────────────────────────────────────────────── */
+.auth-card__rodape {
+  margin-top: 1.25rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--mk-gray-dark, #545457);
+  font-family: var(--mk-font, inherit);
+}
+
+.auth-card__rodape a {
+  color: var(--mk-purple, #ad96dc);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-card__rodape a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,102 @@
+<app-mk-page-title
+  titulo="Assistidos"
+  subtitulo="Filmes que você marcou como assistidos"
+></app-mk-page-title>
+
+<app-mk-alert tipo="erro" [mensagem]="erro"></app-mk-alert>
+
+<div class="grid-wrap">
+  <dx-data-grid
+    [dataSource]="linhas"
+    [showBorders]="true"
+    [columnAutoWidth]="true"
+    [rowAlternationEnabled]="true"
+    [hoverStateEnabled]="true"
+    [paging]="{ pageSize: 10 }"
+    [pager]="{
+      visible: true,
+      displayMode: 'full',
+      showInfo: true,
+      infoText: 'Página {0} de {1} ({2} filmes)',
+      showNavigationButtons: true,
+      showPageSizeSelector: true,
+      allowedPageSizes: [5, 10, 20, 50]
+    }"
+    noDataText="Nenhum filme assistido ainda."
+  >
+    <dxi-column
+      caption="Poster"
+      cellTemplate="posterCell"
+      [width]="80"
+    ></dxi-column>
+    <dxi-column dataField="titulo" caption="Título"></dxi-column>
+    <dxi-column dataField="ano" caption="Ano" [width]="88"></dxi-column>
+    <dxi-column dataField="imdbId" caption="IMDb ID" [width]="118"></dxi-column>
+    <dxi-column
+      dataField="marcadoEm"
+      caption="Marcado em"
+      dataType="datetime"
+      format="dd/MM/yyyy HH:mm"
+    ></dxi-column>
+    <dxi-column
+      caption="Ações"
+      cellTemplate="acoesCell"
+      [width]="110"
+      alignment="center"
+    ></dxi-column>
+
+    <div *dxTemplate="let cell of 'posterCell'">
+      <img
+        *ngIf="cell.data.posterUrl"
+        [src]="cell.data.posterUrl"
+        class="thumb"
+        alt=""
+      />
+      <span *ngIf="!cell.data.posterUrl" class="thumb thumb--empty">—</span>
+    </div>
+
+    <div *dxTemplate="let cell of 'acoesCell'">
+      <div class="acoes">
+        <button
+          type="button"
+          class="acao acao--on-assistido"
+          (click)="aoAlternarAssistido(cell.data)"
+          title="Remover assistido"
+        >
+          ✓
+        </button>
+        <button
+          type="button"
+          class="acao"
+          [class.acao--on-favorito]="cell.data.favorito"
+          (click)="aoAlternarFavorito(cell.data)"
+          title="Favorito"
+        >
+          ♥
+        </button>
+      </div>
+    </div>
+  </dx-data-grid>
+</div>
+
+<dx-popup
+  [width]="400"
+  [height]="210"
+  [showTitle]="false"
+  [showCloseButton]="false"
+  [shading]="true"
+  [(visible)]="popupVisivel"
+  (onHidden)="aoPopupOculto()"
+>
+  <div *dxTemplate="let _ of 'content'">
+    <p class="popup-texto">{{ popupTexto }}</p>
+    <div class="popup-acoes">
+      <app-mk-button
+        label="Cancelar"
+        variante="secundaria"
+        (clique)="popupCancelar()"
+      ></app-mk-button>
+      <app-mk-button label="Confirmar" (clique)="popupConfirmar()"></app-mk-button>
+    </div>
+  </div>
+</dx-popup>
