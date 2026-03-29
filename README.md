@@ -49,18 +49,26 @@ docs/
 
 ## Como rodar o projeto
 
-### 1. Instalar dependências
+### 1. Clonar o repositório
+
+```bash
+git clone https://github.com/filipeabmoura/mkflix.git
+cd mkflix
+```
+
+### 2. Instalar dependências
 
 ```bash
 pnpm install
 ```
 
-### 2. Configurar e subir o banco de dados (Docker)
+### 3. Configurar e subir o banco de dados (Docker)
 
 O PostgreSQL roda via Docker Compose. Primeiro configure o `.env` do pacote de banco:
 
 ```bash
-cp packages/database-mkflix/.env.example packages/database-mkflix/.env
+cd packages/database-mkflix
+cp .env.example .env
 ```
 
 Edite `packages/database-mkflix/.env` com os valores desejados:
@@ -76,17 +84,19 @@ DATABASE_URL=postgresql://mkflix:mkflix@localhost:5433/mkflix
 
 > A porta exposta é **5433** (mapeada para 5432 dentro do container).
 
-Suba o container:
+Suba o container e volte para a raiz:
 
 ```bash
-cd packages/database-mkflix
 docker compose up -d
+cd ../..
 ```
 
-### 3. Configurar variáveis de ambiente da API
+### 4. Configurar variáveis de ambiente da API
 
 ```bash
-cp apps/api/.env.example apps/api/.env
+cd apps/api
+cp .env.example .env
+cd ../..
 ```
 
 Edite `apps/api/.env` (use os mesmos dados do banco configurados acima):
@@ -100,7 +110,7 @@ JWT_SECRET=seu_secret_jwt
 OMDB_API_KEY=sua_chave_omdb #solicite sua chave em [https://www.omdbapi.com/apikey.aspx](https://www.omdbapi.com/apikey.aspx)
 ```
 
-### 4. Executar migrations e seed
+### 5. Executar migrations e seed
 
 ```bash
 # Gera o Prisma Client e aplica migrations
@@ -110,7 +120,13 @@ pnpm --filter @mk/database migrate-dev
 pnpm --filter @mk/database seed
 ```
 
-### 5. Subir em desenvolvimento
+### 6. Compilar todos os pacotes
+
+```bash
+pnpm turbo build
+```
+
+### 7. Subir em desenvolvimento
 
 ```bash
 pnpm dev
