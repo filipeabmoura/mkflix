@@ -78,13 +78,6 @@
       </ng-container>
     </aside>
 
-    <div
-      class="shell__backdrop"
-      *ngIf="menuAberto"
-      (click)="fecharMenu()"
-      aria-hidden="true"
-    ></div>
-
     <main class="shell__content">
       <router-outlet></router-outlet>
     </main>
