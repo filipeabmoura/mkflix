@@ -2,6 +2,11 @@
 
 Teste técnico Microkids — aplicação fullstack para busca, favoritos e assistidos de filmes, consumindo a API externa OMDb.
 
+## Vídeos
+
+- 🎬 [Demo do projeto](https://drive.google.com/file/d/1anQYsWWjjAPm1bdUGwusSSGm018gYN-6/view?usp=sharing)
+- 🚀 [Como executar o projeto](https://drive.google.com/file/d/1bBAZPZ8NH5HYQUIkKRMJxAKVptx6aEOg/view?usp=sharing)
+
 ---
 
 ## Tecnologias utilizadas
