@@ -1,6 +1,6 @@
 <app-mk-page-title
   titulo="Favoritos"
-  subtitulo="Filmes que você favoritou (após assistir)"
+  subtitulo="Filmes que você favoritou"
 ></app-mk-page-title>
 
 <app-mk-alert tipo="erro" [mensagem]="erro"></app-mk-alert>
@@ -59,7 +59,7 @@
       <div class="acoes">
         <button
           type="button"
-          class="acao acao--on"
+          class="acao acao--on-assistido"
           (click)="aoAlternarAssistido(cell.data)"
           title="Remover assistido"
         >
@@ -67,7 +67,7 @@
         </button>
         <button
           type="button"
-          class="acao acao--on"
+          class="acao acao--on-favorito"
           (click)="aoAlternarFavorito(cell.data)"
           title="Remover favorito"
         >
@@ -79,11 +79,12 @@
 </div>
 
 <dx-popup
-  [width]="420"
-  [showCloseButton]="true"
+  [width]="400"
+  [height]="210"
+  [showTitle]="false"
+  [showCloseButton]="false"
   [shading]="true"
   [(visible)]="popupVisivel"
-  [title]="popupTitulo"
   (onHidden)="aoPopupOculto()"
 >
   <div *dxTemplate="let _ of 'content'">

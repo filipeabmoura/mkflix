@@ -4,16 +4,17 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.55rem 1.1rem;
-  border-radius: 6px;
+  border-radius: var(--mk-radius-lg, 16px);
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   border: 1px solid transparent;
+  font-family: var(--mk-font, inherit);
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 .mk-button:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
@@ -21,44 +22,53 @@
   width: 100%;
 }
 
+/* Primário — roxo Microkids + texto navy */
 .mk-button--primaria {
-  background: #e50914;
-  color: #fff;
-}
-
-.mk-button--primaria:hover:not(:disabled) {
-  background: #c40812;
-}
-
-.mk-button--secundaria {
-  background: #fff;
-  color: #1a1a1a;
-  border-color: #d0d0d0;
-}
-
-.mk-button--secundaria:hover:not(:disabled) {
-  background: #f5f5f5;
-}
-
-.mk-button--fantasma {
-  background: transparent;
-  color: #e50914;
+  background: var(--mk-purple, #ad96dc);
+  color: var(--mk-navy, #1b1d36);
   border-color: transparent;
 }
 
+.mk-button--primaria:hover:not(:disabled) {
+  background: var(--mk-purple-light, #c1a7e2);
+}
+
+/* Secundário — borda navy, texto navy */
+.mk-button--secundaria {
+  background: #fff;
+  color: var(--mk-navy, #1b1d36);
+  border-color: var(--mk-navy, #1b1d36);
+}
+
+.mk-button--secundaria:hover:not(:disabled) {
+  background: var(--mk-cream, #f5f5ed);
+}
+
+/* Fantasma — sem fundo, texto roxo */
+.mk-button--fantasma {
+  background: transparent;
+  color: var(--mk-purple, #ad96dc);
+  border-color: transparent;
+}
+
+.mk-button--fantasma:hover:not(:disabled) {
+  background: rgba(173, 150, 220, 0.08);
+}
+
+/* Spinner */
 .mk-button__spinner {
   width: 1rem;
   height: 1rem;
-  border: 2px solid rgba(255, 255, 255, 0.35);
-  border-top-color: #fff;
+  border: 2px solid rgba(27, 29, 54, 0.2);
+  border-top-color: var(--mk-navy, #1b1d36);
   border-radius: 50%;
   animation: mk-spin 0.7s linear infinite;
 }
 
 .mk-button--secundaria .mk-button__spinner,
 .mk-button--fantasma .mk-button__spinner {
-  border-color: rgba(0, 0, 0, 0.15);
-  border-top-color: #e50914;
+  border-color: rgba(173, 150, 220, 0.2);
+  border-top-color: var(--mk-purple, #ad96dc);
 }
 
 @keyframes mk-spin {

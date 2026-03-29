@@ -1,7 +1,22 @@
+:host {
+  display: block;
+  min-height: calc(100vh - 60px);
+}
+
+.pagina-centro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: inherit;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
 .form-card {
   background: #fff;
   border-radius: 10px;
   padding: 1.75rem;
+  width: 100%;
   max-width: 480px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
@@ -42,10 +57,10 @@
 }
 
 .alerta-sucesso {
-  background: #e6f9f0;
-  border: 1px solid #2ecc71;
-  color: #1a7a46;
-  border-radius: 6px;
+  background: rgba(169, 194, 63, 0.12);
+  border: 1px solid rgba(169, 194, 63, 0.4);
+  color: #4a5c00;
+  border-radius: var(--mk-radius-lg, 16px);
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
   font-size: 0.95rem;

@@ -65,10 +65,16 @@
   background: #f5f5f5;
 }
 
-.acao--on {
-  border-color: #e50914;
-  color: #e50914;
-  background: #fff5f5;
+.acao--on-assistido {
+  background: var(--mk-navy, #1b1d36);
+  border-color: var(--mk-navy, #1b1d36);
+  color: #fff;
+}
+
+.acao--on-favorito {
+  background: var(--mk-navy, #1b1d36);
+  border-color: var(--mk-navy, #1b1d36);
+  color: #fff;
 }
 
 .popup-texto {

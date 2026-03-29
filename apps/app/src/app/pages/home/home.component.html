@@ -1,6 +1,6 @@
 <app-mk-page-title
   titulo="Buscar filmes"
-  subtitulo="OMDb: uma requisição por página; a grade carrega mais resultados ao avançar as páginas (20 itens por página)."
+  subtitulo="Encontre filmes para assistir. Use o campo de busca abaixo e clique em Buscar."
 ></app-mk-page-title>
 
 <app-mk-alert tipo="erro" [mensagem]="erroBusca"></app-mk-alert>
@@ -71,7 +71,7 @@
         <button
           type="button"
           class="acao"
-          [class.acao--on]="cell.data.assistido"
+          [class.acao--on-assistido]="cell.data.assistido"
           (click)="aoAlternarAssistido(cell.data)"
           [attr.aria-pressed]="cell.data.assistido"
           title="Assistido"
@@ -81,7 +81,7 @@
         <button
           type="button"
           class="acao"
-          [class.acao--on]="cell.data.favorito"
+          [class.acao--on-favorito]="cell.data.favorito"
           (click)="aoAlternarFavorito(cell.data)"
           [attr.aria-pressed]="cell.data.favorito"
           title="Favorito"
@@ -94,11 +94,12 @@
 </div>
 
 <dx-popup
-  [width]="420"
-  [showCloseButton]="true"
+  [width]="400"
+  [height]="210"
+  [showTitle]="false"
+  [showCloseButton]="false"
   [shading]="true"
   [(visible)]="popupVisivel"
-  [title]="popupTitulo"
   (onHidden)="aoPopupOculto()"
 >
   <div *dxTemplate="let _ of 'content'">
