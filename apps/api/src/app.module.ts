@@ -9,6 +9,7 @@ import { AdminModule } from "./modulos/admin/admin.module";
 import { JwtAuthGuard } from "./core/auth/jwt-auth.guard";
 import { PermissaoGuard } from "./core/auth/permissao.guard";
 import { ClientModule } from "./core/client/client.module";
+import { MkExceptionFilter } from "./core/filters/mk-exception.filter";
 
 @Module({
   imports: [
