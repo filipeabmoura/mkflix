@@ -59,7 +59,7 @@
       <div class="acoes">
         <button
           type="button"
-          class="acao acao--on"
+          class="acao acao--on-assistido"
           (click)="aoAlternarAssistido(cell.data)"
           title="Remover assistido"
         >
@@ -68,7 +68,7 @@
         <button
           type="button"
           class="acao"
-          [class.acao--on]="cell.data.favorito"
+          [class.acao--on-favorito]="cell.data.favorito"
           (click)="aoAlternarFavorito(cell.data)"
           title="Favorito"
         >

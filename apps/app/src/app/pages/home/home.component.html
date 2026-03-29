@@ -71,7 +71,7 @@
         <button
           type="button"
           class="acao"
-          [class.acao--on]="cell.data.assistido"
+          [class.acao--on-assistido]="cell.data.assistido"
           (click)="aoAlternarAssistido(cell.data)"
           [attr.aria-pressed]="cell.data.assistido"
           title="Assistido"
@@ -81,7 +81,7 @@
         <button
           type="button"
           class="acao"
-          [class.acao--on]="cell.data.favorito"
+          [class.acao--on-favorito]="cell.data.favorito"
           (click)="aoAlternarFavorito(cell.data)"
           [attr.aria-pressed]="cell.data.favorito"
           title="Favorito"

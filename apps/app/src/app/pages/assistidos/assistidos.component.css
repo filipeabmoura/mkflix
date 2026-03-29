@@ -48,10 +48,16 @@
   background: #f5f5f5;
 }
 
-.acao--on {
-  border-color: var(--mk-purple, #ad96dc);
-  color: var(--mk-navy, #1b1d36);
-  background: rgba(173, 150, 220, 0.15);
+.acao--on-assistido {
+  background: var(--mk-navy, #1b1d36);
+  border-color: var(--mk-navy, #1b1d36);
+  color: #fff;
+}
+
+.acao--on-favorito {
+  background: var(--mk-navy, #1b1d36);
+  border-color: var(--mk-navy, #1b1d36);
+  color: #fff;
 }
 
 .popup-texto {
